@@ -1,37 +1,40 @@
 .server-card {
-  background-color: #f4f4f4;
+  border: 1px solid #ccc;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+  max-width: 300px;
+  margin: 10px;
   text-align: center;
 }
 
-.server-card h3 {
-  color: #333;
-  font-size: 1.2rem;
-}
-
-.server-card p {
-  margin: 5px 0;
-  color: #555;
-}
-
-.error-message {
-  color: red;
-  margin-top: 10px;
-  font-size: 0.9rem;
-}
-
 button {
-  background-color: #007bff;
-  color: white;
+  padding: 10px 15px;
   border: none;
-  padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
 }
 
 button:disabled {
-  background-color: #ccc;
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.toggle-button {
+  margin-top: 10px;
+}
+
+.toggle-btn.online {
+  background-color: green;
+}
+
+.toggle-btn.offline {
+  background-color: red;
+}
+
+button:hover {
+  opacity: 0.9;
 }

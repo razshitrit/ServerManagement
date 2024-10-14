@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ServerCard from "./ServerCard";
 import './ServerList.css';
 
 function ServerList({ servers }) {
+  useEffect(() => {
+    console.log("Fetching servers...");
+  }, [servers]);
+
   console.log("Servers data:", servers);
+
   if (!servers || servers.length === 0) {
     return <p>אין שרתים כרגע</p>;
   }

@@ -4,37 +4,26 @@ import './App.css';
 
 const App = () => {
   const [servers, setServers] = useState([]);
-  const [filterActive, setFilterActive] = useState(false);
 
   useEffect(() => {
     const fetchServers = async () => {
       try {
-        const response = await fetch("/api/servers");
+        const response = await fetch("http://localhost:8080/api/servers");
         const data = await response.json();
+        console.log("Data from server:", data);
         setServers(data);
       } catch (error) {
         console.error("Error fetching servers:", error);
       }
     };
+
     fetchServers();
   }, []);
-
-  const filteredServers = filterActive
-    ? servers.filter((server) => server.status === "active")
-    : servers;
 
   return (
     <div>
       <h1>Server List</h1>
-      <label>
-        Show Active Servers Only:
-        <input
-          type="checkbox"
-          checked={filterActive}
-          onChange={(e) => setFilterActive(e.target.checked)}
-        />
-      </label>
-      <ServerList servers={filteredServers} /> {}
+      <ServerList servers={servers} />
     </div>
   );
 };

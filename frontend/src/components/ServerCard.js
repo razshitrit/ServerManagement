@@ -1,14 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import './ServerCard.css';
 
 function ServerCard({ server }) {
-  const [status, setStatus] = useState(server.status);
+  const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  useEffect(() => {
+    if (server) {
+      setStatus(server.status);
+    }
+  }, [server]);
+
   const toggleStatus = async () => {
-    const newStatus = status === "ACTIVE" ? "INACTIVE" : "ACTIVE";
+    if (!server) return;
+
+    const newStatus = status === "ONLINE" ? "OFFLINE" : "ONLINE";
     setLoading(true);
     setError(null);
 
@@ -26,16 +34,24 @@ function ServerCard({ server }) {
     }
   };
 
+  if (!server) {
+    return <p>Server data is not available.</p>;
+  }
+
   return (
     <div className="server-card">
-      <h3>{server.name}</h3>
-      <p>IP: {server.ip}</p>
-      <p>Hosting Company: {server.hostingCompany.name}</p>
-      <p>Status: {status}</p>
+      <h3>{server.name || "Name not available"}</h3>
+      <p>IP: {server.ip || "IP not available"}</p>
+      <p>Hosting Company: {server.hostingCompany?.name || "Hosting company not available"}</p>
+      <p>Status: {status || "Status not available"}</p>
       {error && <p className="error-message">{error}</p>}
-      <button onClick={toggleStatus} disabled={loading}>
-        {loading ? "Updating..." : status === "ACTIVE" ? "Deactivate" : "Activate"}
-      </button>
+
+      {/* Toggle Button */}
+      <div className="toggle-button">
+        <button onClick={toggleStatus} disabled={loading} className={`toggle-btn ${status === "ONLINE" ? "online" : "offline"}`}>
+          {loading ? "Updating..." : status === "ONLINE" ? "Switch to OFFLINE" : "Switch to ONLINE"}
+        </button>
+      </div>
     </div>
   );
 }
